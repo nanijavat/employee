@@ -1,8 +1,10 @@
 package com.org.employee.cotroller;
 
 import com.org.employee.model.Employee;
+import com.org.employee.response.PartnerModel;
 import com.org.employee.service.EmployeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +16,12 @@ public class EmployeeController {
     @Autowired
     EmployeService employeService;
 
+@Value("${siri.name}")
+private String name;
+
     @PostMapping("/create")
     public void createEmployee(@RequestBody Employee employee) {
+        System.out.println(name);
         employeService.createEmployee(employee);
     }
 
@@ -50,4 +56,10 @@ public class EmployeeController {
     Employee getByEmpName(@PathVariable String name) {
         return employeService.getEmployeeBasedOnName(name);
     }
+
+    @GetMapping("/getAllPartner")
+    public List<PartnerModel>getAllPartner(){
+        return employeService.getAllPartnerFromEmployee();
+    }
+
 }
